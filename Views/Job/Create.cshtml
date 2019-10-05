@@ -1,0 +1,154 @@
+﻿@model JobPortal.Models.Job
+
+@using JobPortal.Helpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Stylesheets {
+    <link rel="stylesheet" href="~/vendor/bootstrap-select/css/bootstrap-select.min.css">
+}
+
+<section class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="heading">Add a new position</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <form id="job-main-form" method="post" asp-controller="Job" asp-action="Save" class="job-add-form">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>Job details</h4>
+                            <p class="text-muted text-small">
+                                Some additional info for this screen about validity of
+                                the ads, etc. Pellentesque habitant morbi tristique senectus et netus et malesuada
+                                fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget,
+                                tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
+                                ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien
+                                ullamcorper pharetra.
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group @Html.AddClassIfPropertyInError(x => x.Title, "is-invalid")">
+                            @Html.LabelFor(c => c.Title)
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                            <span class="help-inline">@Html.ValidationMessageFor(x => x.Title)</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            @Html.LabelFor(c => c.Description)
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 5 })
+                            <span class="help-inline">@Html.ValidationMessageFor(x => x.Description)</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 form-group">
+                            @Html.LabelFor(c => c.Location)
+                            @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+                            <span class="help-inline">@Html.ValidationMessageFor(x => x.Location)</span>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            @Html.LabelFor(c => c.Type)
+                            <select id="type" name="Type" placeholder="Choose job type"
+                                    class="form-control select2">
+                                <option value="Full time">Full time</option>
+                                <option value="Part time">Part time</option>
+                                <option value="Internship">Internship</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" placeholder="Choose category"
+                                    class="form-control select2">
+                                <option value="web-design">Web design</option>
+                                <option value="graphic-design">Graphic design</option>
+                                <option value="web-development">Web development</option>
+                                <option value="human-resource">Human Resources</option>
+                                <option value="support">Support</option>
+                                <option value="android">Android</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 form-group">
+                            <label for="apply_url">
+                                Apply URL <span class="note">(users will apply on your website)</span>
+                            </label>
+                            <input id="apply_url" type="url" class="form-control">
+                        </div>
+                        <div class="col-xl-6 form-group">
+                            @Html.LabelFor(c => c.LastDate, "Validity of the post")
+                            @Html.TextBoxFor(m => m.LastDate, new { @class = "form-control", @type = "date" })
+                            @*<label for="validity">Validity of the post</label>
+                                <input id="validity" name="last_date" type="date" class="form-control">*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr class="margin-bottom--big">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>Company details</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            @Html.LabelFor(c => c.CompanyName, "Company Name")
+                            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            @Html.LabelFor(c => c.CompanyDescription, "Company Description")
+                            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "form-control", rows = 3 })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 form-group">
+                            @Html.LabelFor(c => c.Website, "Company Website")
+                            @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @type = "url" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr>
+                            <div class="checkbox text-center">
+                                <label>
+                                    <input type="checkbox"> I agree with the <a href="#">Terms and conditions</a>.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <hr>
+                            <button type="submit" class="btn btn-outline-white-primary">
+                                <i class="fa fa-magic"></i>
+                                Save and publish
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

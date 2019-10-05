@@ -1,0 +1,53 @@
+﻿@model JobPortal.ViewModels.EmployeeRegisterViewModel
+
+@{
+    ViewData["Title"] = "Employee Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-6 offset-3">
+    <div class="box">
+        <h3 class="heading">New account</h3>
+        <p class="lead">Not our registered yet?</p>
+        <p class="text-muted">
+            If you have any questions, please feel free to <a href="#">contact us</a>,
+            our customer service center is working for you 24/7.
+        </p>
+        <form method="post" asp-controller="Account" asp-action="EmployeeRegister">
+            <div asp-validation-summary="ModelOnly"></div>
+            @Html.ValidationSummary()
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control"})
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control"})
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Password)
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.ConfirmPassword)
+                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @type = "password" })
+            </div>
+
+            @Html.AntiForgeryToken()
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-white-primary">
+                    <i class="fa fa-user-md"></i> Register
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

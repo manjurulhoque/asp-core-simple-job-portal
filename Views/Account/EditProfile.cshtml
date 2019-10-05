@@ -1,0 +1,57 @@
+﻿@model User
+
+@{
+    ViewBag.Title = "User Profile";
+    Layout = "_Layout";
+}
+
+<div class="col-lg-6 offset-3">
+    <div class="box">
+        <h3 class="heading">Edit Profile</h3>
+
+        <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(c => c.FirstName, "First Name")
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control"})
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.LastName, "Last Name")
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control"})
+            </div>
+
+
+            <div class="form-group">
+                <label>Gender</label>
+                <br>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(x => x.Gender, "Male", new { @class = "form-check-input", id = "male", @checked="checked" })
+                    @* <input class="form-check-input" checked *@
+                    @*        type="radio" name="Gender" id="male gender" *@
+                    @*        value="male"> *@
+                    @* <label class="form-check-label" for="male">Male</label> *@
+                    @Html.LabelFor(x => x.Gender, "Male", new { @class = "form-check-label"})
+                </div>
+                <div class="form-check form-check-inline">
+                    @Html.RadioButtonFor(x => x.Gender, "Female", new { @class = "form-check-input", id = "female" })
+                    @* <input class="form-check-input" *@
+                    @*        type="radio" name="Gender" id="female" *@
+                    @*        value="female"> *@
+                    @* <label class="form-check-label" for="female">Female</label> *@
+                    @Html.LabelFor(x => x.Gender, "Female", new { @class = "form-check-label"})
+                </div>
+            </div>
+
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-white-primary">
+                    <i class="fa fa-signing"></i> Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

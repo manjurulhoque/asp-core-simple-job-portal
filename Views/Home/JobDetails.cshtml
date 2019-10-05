@@ -1,0 +1,122 @@
+﻿@model JobPortal.ViewModels.Home.JobDetailsViewModel
+
+@using Humanizer
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Job Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-light-gray">
+    <div class="container">
+        <h1 class="heading">
+            @Model.Job.Title<br>
+            <small>at <a href="#"> @Model.Job.CompanyName</a></small>
+        </h1>
+        <div class="job-detail-description">
+            <i class="fa fa-map-marker job__location"> </i>
+            @Model.Job.Location | Posted @Model.Job.CreatedAt.Humanize() |
+            @if (Model.Job.Type == "Full time")
+            {
+                <span class="badge featured-badge badge-success">Full time</span>
+            }
+            else if (Model.Job.Type == "Part time")
+            {
+                <span class="badge featured-badge badge-primary">Part time</span>
+            }
+            else
+            {
+                <span style="color: #ffffff;" class="badge featured-badge badge-warning">Internship</span>
+            }
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>Category: N/A</h3>
+                <h5>Last date: @Model.Job.LastDate.Date</h5>
+                <h5 class="text-info">Salary: Negotiable</h5>
+                <blockquote class="blockquote">
+                    <p>@Model.Job.Description</p>
+                </blockquote>
+                <div class="job-detail__apply-bottom">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        if (Model.IsApplied)
+                        {
+                            <input type="button" class="btn btn-outline-white-primary" value="Already applied" />
+                        }
+                        else
+                        {
+                            <form asp-controller="Job" asp-action="Apply" asp-route-id="@Model.Job.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                @*<input type="hidden" name="job" value="1">*@
+                                <input type="submit" class="btn btn-outline-white-primary"
+                                       value="Apply for this job" />
+                            </form>
+                        }
+                    }
+                    else
+                    {
+                        <form asp-controller="Job" asp-action="Apply" asp-route-id="@Model.Job.Id" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="job" value="{{ job.id }}">
+                            <input type="submit" class="btn btn-outline-white-primary"
+                                   value="Apply for this job" />
+                        </form>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+                <h4>About @Model.Job.CompanyName</h4>
+                <p class="job-detail__company-description">@Model.Job.CompanyDescription</p>
+                <p class="job-detail__social social social--outline">
+                    <a href="@Model.Job.Website" data-toggle="tooltip" data-placement="top" title="Website"
+                       class="link">
+                        <i class="fa fa-link"></i>
+                    </a>
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter" class="twitter">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook" class="facebook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </p>
+                <div class="job-detail__apply-top">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        if (Model.IsApplied)
+                        {
+                            <input type="button" class="btn btn-outline-white-primary" value="Already applied" />
+                        }
+                        else
+                        {
+                            <form asp-controller="Job" asp-action="Apply" asp-route-id="@Model.Job.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                @*<input type="hidden" name="job" value="1">*@
+                                <input type="submit" class="btn btn-outline-white-primary"
+                                       value="Apply for this job" />
+                            </form>
+                        }
+                    }
+                    else
+                    {
+                        <form asp-controller="Job" asp-action="Apply" asp-route-id="@Model.Job.Id" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="job" value="{{ job.id }}">
+                            <input type="submit" class="btn btn-outline-white-primary"
+                                   value="Apply for this job" />
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

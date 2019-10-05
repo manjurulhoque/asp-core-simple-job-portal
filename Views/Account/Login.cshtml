@@ -1,0 +1,36 @@
+﻿@model JobPortal.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-6 offset-3">
+    <div class="box">
+        <h3 class="heading">New account</h3>
+        <p class="lead">Not our registered yet?</p>
+        <p class="text-muted">
+            If you have any questions, please feel free to <a href="#">contact us</a>,
+            our customer service center is working for you 24/7.
+        </p>
+        <form method="post" asp-controller="Account" asp-action="Login">
+            @Html.ValidationSummary()
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Email, "Email")
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email@example.com" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Password, "Password")
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password", @type = "password" })
+            </div>
+
+            @Html.AntiForgeryToken()
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-white-primary">
+                    <i class="fa fa-user-md"></i> Login
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
